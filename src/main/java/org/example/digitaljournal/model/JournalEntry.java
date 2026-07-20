@@ -1,29 +1,37 @@
 package org.example.digitaljournal.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class JournalEntry {
 
     int id;
-    int user_id;
-    Date entry_date;
+    int userID;
+    LocalDate entryDate;
     Rating rating;
     String text;
 
-    public int getUser_id() {
-        return user_id;
+    public JournalEntry(int id, int userID, LocalDate entryDate, Rating rating, String text) {
+        this.id = id;
+        this.userID = userID;
+        this.entryDate = entryDate;
+        this.rating = rating;
+        this.text = text;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public int getUserID() {
+        return userID;
     }
 
-    public Date getEntry_date() {
-        return entry_date;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public void setEntry_date(Date entry_date) {
-        this.entry_date = entry_date;
+    public LocalDate getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(LocalDate entryDate) {
+        this.entryDate = entryDate;
     }
 
     public Rating getRating() {
@@ -54,8 +62,8 @@ public class JournalEntry {
     public String toString() {
         return "JournalEntry{" +
                 "id=" + id +
-                ", user_id=" + user_id +
-                ", entry_date=" + entry_date +
+                ", user id=" + userID +
+                ", entry date=" + entryDate +
                 ", rating=" + rating +
                 ", text='" + text + '\'' +
                 '}';
