@@ -14,10 +14,7 @@ public class UserDAOJdbc implements UserDAO {
 
     @Override
     public void registerUser(User user) throws SQLException {
-
-        String hash =
-                PasswordHash.createHash(user.getPassword());
-
+        String hash = PasswordHash.createHash(user.getPassword());
         String sql = "INSERT INTO user (username, password) VALUES (?, ?)";
 
         try (Connection con = DBConnection.getConnection();
@@ -34,8 +31,6 @@ public class UserDAOJdbc implements UserDAO {
     public User findByUsername(String username) throws SQLException {
         String sql = "SELECT username, password FROM user WHERE username = ?";
 
-        User user = null;
-
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -50,7 +45,6 @@ public class UserDAOJdbc implements UserDAO {
                 }
             }
         }
-
         return null;
     }
 }
