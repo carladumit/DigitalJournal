@@ -1,11 +1,11 @@
 INSERT INTO user (username, password) VALUES
-('clever_fox', 'Fox#Pass92'),
-('brave_bear', 'Bear!Secure7'),
-('chilly_penguin', 'Penguin$44'),
-('silent_owl', 'NightOwl#18'),
-('happy_dolphin', 'Splash!2026'),
-('sleepy_sloth', 'SlowTree*55'),
-('mighty_lion', 'Roar#Power1'),
-('swift_falcon', 'FlyFast!88'),
-('calm_koala', 'Eucalyptus$3'),
-('curious_otter', 'River#Fun22');
+('clever_fox', '$2a$10$wT8KzUvA8Z8E3z0qN1P7u.L0hQ.dGgE8I2y4U5a6B7c8D9e0F1g2H'),
+('brave_bear', '$2a$10$k1A2b3C4d5E6f7G8h9I0u.P4q5R6s7T8u9V0w1X2y3Z4a5B6c7D8E'),
+('chilly_penguin', '$2a$10$M8n9O0p1Q2r3S4t5U6v7w.X8y9Z0a1B2c3D4e5F6g7H8i9J0k1L2M'),
+('silent_owl', '$2a$10$x9Y0z1A2b3C4d5E6f7G8h.I9j0K1l2M3n4O5p6Q7r8S9t0U1v2W'),
+('happy_dolphin', '$2a$10$P1q2R3s4T5u6V7w8X9y0z.A1b2C3d4E5f6G7h8I9j0K1l2M3n4O'),
+('sleepy_sloth', '$2a$10$v7W8x9Y0z1A2b3C4d5E6f.G7h8I9j0K1l2M3n4O5p6Q7r8S9t0U'),
+('mighty_lion', '$2a$10$a1B2c3D4e5F6g7H8i9J0k.L1m2N3o4P5q6R7s8T9u0V1w2X3y4Z'),
+('swift_falcon', '$2a$10$E5f6G7h8I9j0K1l2M3n4O.P5q6R7s8T9u0V1w2X3y4Z5a6B7c8D'),
+('calm_koala', '$2a$10$9I0j1K2l3M4n5O6p7Q8r9.S0t1U2v3W4x5Y6z7A8b9C0d1E2f3G'),
+('curious_otter', '$2a$10$L1m2N3o4P5q6R7s8T9u0V.W1x2Y3z4A5b6C7d8E9f0G1h2I3j4K');
