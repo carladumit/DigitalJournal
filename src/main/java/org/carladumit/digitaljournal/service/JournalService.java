@@ -42,5 +42,4 @@ public class JournalService {
         }
         journalDAO.deleteEntryByUserAndDate(currentUser.getId(), date);
     }
-
 }

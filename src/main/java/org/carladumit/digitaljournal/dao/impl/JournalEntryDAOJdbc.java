@@ -68,7 +68,6 @@ public class JournalEntryDAOJdbc implements JournalEntryDAO {
     public boolean deleteEntryByUserAndDate(int userID, LocalDate date) {
         String sql = """
                 DELETE FROM journal_entry
-                       
                 WHERE user_id = ?
                   AND entry_date = ?
                 """;
