@@ -1,8 +1,10 @@
 PRAGMA foreign_keys = ON;
 
-DROP TABLE user;
-DROP TABLE journal_entry;
-
+-- DROP TABLE user;
+-- DROP TABLE journal_entry;
+-- DELETE FROM user;
+DELETE FROM sqlite_sequence
+WHERE name = 'user';
 
 CREATE TABLE IF NOT EXISTS user (
     id            INTEGER PRIMARY KEY AUTOINCREMENT,
