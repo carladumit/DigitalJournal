@@ -1,6 +1,6 @@
-package org.example.digitaljournal;
+package org.carladumit.digitaljournal;
 
-import org.example.digitaljournal.ui.ConsoleUI;
+import org.carladumit.digitaljournal.ui.ConsoleUI;
 
 import java.sql.SQLException;
 
