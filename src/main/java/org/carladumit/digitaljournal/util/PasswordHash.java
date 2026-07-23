@@ -1,4 +1,4 @@
-package org.example.digitaljournal.util;
+package org.carladumit.digitaljournal.util;
 
 import org.mindrot.jbcrypt.BCrypt;
 

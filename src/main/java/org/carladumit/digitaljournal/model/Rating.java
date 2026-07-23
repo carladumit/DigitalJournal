@@ -1,4 +1,4 @@
-package org.example.digitaljournal.model;
+package org.carladumit.digitaljournal.model;
 
 public enum Rating {
     SAD, BAD, NEUTRAL, GOOD, GREAT;
