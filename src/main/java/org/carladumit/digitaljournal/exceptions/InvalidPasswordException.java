@@ -1,7 +1,7 @@
 package org.carladumit.digitaljournal.exceptions;
 
-public class InvalidPasswordException extends Throwable {
+public class InvalidPasswordException extends RuntimeException {
     public InvalidPasswordException() {
-        super(message, cause);
+        super("Incorrect password.");
     }
 }

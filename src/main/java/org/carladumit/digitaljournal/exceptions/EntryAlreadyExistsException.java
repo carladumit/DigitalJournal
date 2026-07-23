@@ -1,7 +1,7 @@
 package org.carladumit.digitaljournal.exceptions;
 
-public class EntryAlreadyExistsException extends Throwable {
+public class EntryAlreadyExistsException extends RuntimeException {
     public EntryAlreadyExistsException() {
-        super(message, cause);
+        super("Entry already exists.");
     }
 }
