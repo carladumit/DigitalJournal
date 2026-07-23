@@ -1,13 +1,11 @@
 package org.carladumit.digitaljournal.ui;
 
-import org.carladumit.digitaljournal.exceptions.EntryAlreadyExistsException;
+import org.carladumit.digitaljournal.exceptions.*;
 import org.carladumit.digitaljournal.model.JournalEntry;
 import org.carladumit.digitaljournal.model.Rating;
-import org.carladumit.digitaljournal.model.User;
 import org.carladumit.digitaljournal.service.JournalService;
 import org.carladumit.digitaljournal.service.UserService;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
@@ -16,7 +14,7 @@ public class ConsoleUI {
 
     public static Scanner sc = new Scanner(System.in);
 
-    public static void start () throws SQLException, EntryAlreadyExistsException {
+    public static void start (){
 
         while(true) {
             System.out.println("----------------------------");
@@ -40,7 +38,7 @@ public class ConsoleUI {
         }
     }
 
-    public static int readOption() throws SQLException {
+    public static int readOption() {
         while(true) {
             try {
                 return Integer.parseInt(sc.nextLine());
@@ -50,7 +48,7 @@ public class ConsoleUI {
         }
     }
 
-    public static void promptLogin() throws SQLException, EntryAlreadyExistsException {
+    public static void promptLogin() {
         System.out.println("-------------------");
         System.out.println("      LOG IN       ");
         System.out.println("-------------------");
@@ -58,13 +56,20 @@ public class ConsoleUI {
         String username = readUsername();
         String password = readPassword();
 
-        User user = UserService.login(username, password);
-        if (user != null) {
+        try {
+            UserService.login(username, password);
+            System.out.println("Log in successful.");
             journalMenu();
+        } catch (UserNotFoundException e) {
+            System.out.println("User not found.");
+        } catch (InvalidPasswordException e) {
+            System.out.println("Incorrect password.");
+        } catch (DatabaseException e) {
+            System.out.println("Database unavailable.");
         }
     }
 
-    public static void promptRegister() throws SQLException, EntryAlreadyExistsException {
+    public static void promptRegister(){
         System.out.println("-------------------");
         System.out.println("      SIGN UP      ");
         System.out.println("-------------------");
@@ -74,11 +79,19 @@ public class ConsoleUI {
         System.out.print("Confirm ");
         String passwordConfirmation = readPassword();
 
-        if (password.equals(passwordConfirmation)) {
-            boolean ok = UserService.register(username, password);
-            if (ok) {
-                journalMenu();
-            } else { System.out.println("Passwords do not match."); }
+        if (!password.equals(passwordConfirmation)) {
+            System.out.println("Passwords do not match.");
+            return;
+        }
+
+        try {
+            UserService.register(username, password);
+            System.out.println("Registration successful.");
+            journalMenu();
+        } catch (UserAlreadyExistsException e) {
+            System.out.println("Username already exists.");
+        } catch (DatabaseException e) {
+            System.out.println("Database unavailable.");
         }
     }
 
@@ -102,7 +115,7 @@ public class ConsoleUI {
         return password;
     }
 
-    public static void journalMenu() throws EntryAlreadyExistsException, SQLException {
+    public static void journalMenu(){
         while (true) {
             System.out.println("----------------------------");
             System.out.println("        WELCOME BACK!       ");
@@ -116,7 +129,7 @@ public class ConsoleUI {
 
             switch (option) {
                 case 1 -> promptJournalEntry();
-                case 2 -> promptReadEntriesByDate();
+                case 2 -> promptReadEntryByDate();
                 case 3 -> promptDeleteEntry();
                 case 0 -> {
                     UserService.logout();
@@ -127,7 +140,7 @@ public class ConsoleUI {
         }
     }
 
-    public static void promptJournalEntry() throws EntryAlreadyExistsException {
+    public static void promptJournalEntry(){
         System.out.println("-------------------");
         System.out.println("     NEW ENTRY     ");
         System.out.println("-------------------");
@@ -136,7 +149,14 @@ public class ConsoleUI {
         String rating = promptRating();
         String text = promptText();
 
-        JournalService.createEntry(entryDate, rating, text);
+        try {
+            JournalService.createEntry(entryDate, rating, text);
+            System.out.println("Entry saved successfully.");
+        } catch (EntryAlreadyExistsException e) {
+            System.out.println("You have already written today's entry.");
+        } catch (DatabaseException e) {
+            System.out.println("Database unavailable.");
+        }
     }
 
     static String promptRating() {
@@ -158,23 +178,26 @@ public class ConsoleUI {
         return sc.nextLine();
     }
 
-    public static void promptReadEntriesByDate() throws SQLException {
+    public static void promptReadEntryByDate() {
         System.out.println("-------------------");
         System.out.println("   YOUR ENTRIES    ");
         System.out.println("-------------------");
 
         LocalDate date = promptDate();
-        JournalEntry entry = JournalService.readEntriesByDate(date);
-        if (entry == null) {
-            System.out.println("No entry found for " + date);
-            return;
-        }
 
-        System.out.println("----------------------------");
-        System.out.println("Date: " + entry.getEntryDate());
-        System.out.println("It was a " + entry.getRating() + " day.");
-        System.out.println(entry.getText());
+        try{
+            JournalEntry entry = JournalService.readEntriesByDate(date);
+            System.out.println("----------------------------");
+            System.out.println("Date: " + entry.getEntryDate());
+            System.out.println("It was a " + entry.getRating() + " day.");
+            System.out.println(entry.getText());
+
+        } catch (EntryNotFoundException e) {
+            System.out.println("No entry found for this date.");
+        } catch (DatabaseException e) {
+            System.out.println("Database unavailable.");
         }
+    }
 
     public static LocalDate promptDate(){
         while (true) {
@@ -187,11 +210,25 @@ public class ConsoleUI {
         }
     }
 
-    public static void promptDeleteEntry() throws SQLException {
+    public static void promptDeleteEntry(){
         System.out.println("-------------------");
         System.out.println("    DELETE ENTRY   ");
         System.out.println("-------------------");
         LocalDate date = promptDate();
-        JournalService.deleteEntry(date);
+        System.out.print("Are you sure? (Y/N): ");
+
+        if (!sc.nextLine().trim().equalsIgnoreCase("Y")) {
+            System.out.println("Deletion cancelled.");
+            return;
+        }
+
+        try {
+            JournalService.deleteEntry(date);
+            System.out.println("Entry deleted successfully.");
+        } catch (EntryNotFoundException e) {
+            System.out.println("No entry found for this date.");
+        } catch (DatabaseException e) {
+            System.out.println("Database unavailable.");
+        }
     }
 }

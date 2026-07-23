@@ -1,7 +1,7 @@
 package org.carladumit.digitaljournal.exceptions;
 
 public class UserAlreadyExistsException extends RuntimeException {
-    public UserAlreadyExistsException(String message, Throwable cause) {
+    public UserAlreadyExistsException() {
         super(message, cause);
     }
 }

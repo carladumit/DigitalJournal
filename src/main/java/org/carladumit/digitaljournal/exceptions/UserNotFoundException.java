@@ -1,7 +1,7 @@
 package org.carladumit.digitaljournal.exceptions;
 
 public class UserNotFoundException extends Throwable {
-    public UserNotFoundException(String message, Throwable cause) {
+    public UserNotFoundException() {
         super(message, cause);
     }
 }
