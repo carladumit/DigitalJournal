@@ -7,10 +7,10 @@ public class JournalEntry {
     int id;
     int userID;
     LocalDate entryDate;
-    Rating rating;
+    String rating;
     String text;
 
-    public JournalEntry(int id, int userID, LocalDate entryDate, Rating rating, String text) {
+    public JournalEntry(int id, int userID, LocalDate entryDate, String rating, String text) {
         this.id = id;
         this.userID = userID;
         this.entryDate = entryDate;
@@ -18,7 +18,7 @@ public class JournalEntry {
         this.text = text;
     }
 
-    public JournalEntry(int userID, LocalDate entryDate, Rating rating, String text) {
+    public JournalEntry(int userID, LocalDate entryDate, String rating, String text) {
         this.userID = userID;
         this.entryDate = entryDate;
         this.rating = rating;
@@ -41,11 +41,11 @@ public class JournalEntry {
         this.entryDate = entryDate;
     }
 
-    public Rating getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(Rating rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
