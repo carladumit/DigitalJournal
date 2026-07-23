@@ -1,4 +1,4 @@
-package org.example.digitaljournal.model;
+package org.carladumit.digitaljournal.model;
 
 import java.time.LocalDate;
 
@@ -12,6 +12,13 @@ public class JournalEntry {
 
     public JournalEntry(int id, int userID, LocalDate entryDate, Rating rating, String text) {
         this.id = id;
+        this.userID = userID;
+        this.entryDate = entryDate;
+        this.rating = rating;
+        this.text = text;
+    }
+
+    public JournalEntry(int userID, LocalDate entryDate, Rating rating, String text) {
         this.userID = userID;
         this.entryDate = entryDate;
         this.rating = rating;
