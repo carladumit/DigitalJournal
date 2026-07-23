@@ -1,5 +1,9 @@
 package org.carladumit.digitaljournal.ui;
 
+import org.carladumit.digitaljournal.dao.JournalEntryDAO;
+import org.carladumit.digitaljournal.dao.UserDAO;
+import org.carladumit.digitaljournal.dao.impl.JournalEntryDAOJdbc;
+import org.carladumit.digitaljournal.dao.impl.UserDAOJdbc;
 import org.carladumit.digitaljournal.exceptions.*;
 import org.carladumit.digitaljournal.model.JournalEntry;
 import org.carladumit.digitaljournal.model.Rating;
@@ -12,10 +16,19 @@ import java.util.Scanner;
 
 public class ConsoleUI {
 
-    public static Scanner sc = new Scanner(System.in);
+    private final Scanner sc;
+    private final UserService userService;
+    private final JournalService journalService;
 
-    public static void start (){
+    public ConsoleUI() {
+        this.sc = new Scanner(System.in);
+        UserDAO userDAO = new UserDAOJdbc();
+        JournalEntryDAO journalDAO = new JournalEntryDAOJdbc();
+        this.userService = new UserService(userDAO);
+        this.journalService = new JournalService(journalDAO, userService);
+    }
 
+    public void start (){
         while(true) {
             System.out.println("----------------------------");
             System.out.println("       5-YEAR JOURNAL       ");
@@ -38,7 +51,7 @@ public class ConsoleUI {
         }
     }
 
-    public static int readOption() {
+    private int readOption() {
         while(true) {
             try {
                 return Integer.parseInt(sc.nextLine());
@@ -48,7 +61,7 @@ public class ConsoleUI {
         }
     }
 
-    public static void promptLogin() {
+    private void promptLogin() {
         System.out.println("-------------------");
         System.out.println("      LOG IN       ");
         System.out.println("-------------------");
@@ -57,7 +70,7 @@ public class ConsoleUI {
         String password = readPassword();
 
         try {
-            UserService.login(username, password);
+            userService.login(username, password);
             System.out.println("Log in successful.");
             journalMenu();
         } catch (UserNotFoundException e) {
@@ -69,7 +82,7 @@ public class ConsoleUI {
         }
     }
 
-    public static void promptRegister(){
+    private void promptRegister(){
         System.out.println("-------------------");
         System.out.println("      SIGN UP      ");
         System.out.println("-------------------");
@@ -85,7 +98,7 @@ public class ConsoleUI {
         }
 
         try {
-            UserService.register(username, password);
+            userService.register(username, password);
             System.out.println("Registration successful.");
             journalMenu();
         } catch (UserAlreadyExistsException e) {
@@ -95,7 +108,7 @@ public class ConsoleUI {
         }
     }
 
-    static String readUsername() {
+    private String readUsername() {
         System.out.print("Username: ");
         String username = sc.nextLine().trim().toLowerCase();
         while (username.isEmpty()) {
@@ -105,7 +118,7 @@ public class ConsoleUI {
         return username;
     }
 
-    static String readPassword() {
+    private String readPassword() {
         System.out.print("Password: ");
         String password = sc.nextLine().trim();
         while (password.isEmpty()) {
@@ -115,7 +128,7 @@ public class ConsoleUI {
         return password;
     }
 
-    public static void journalMenu(){
+    private void journalMenu(){
         while (true) {
             System.out.println("----------------------------");
             System.out.println("        WELCOME BACK!       ");
@@ -132,15 +145,16 @@ public class ConsoleUI {
                 case 2 -> promptReadEntryByDate();
                 case 3 -> promptDeleteEntry();
                 case 0 -> {
-                    UserService.logout();
+                    userService.logout();
                     System.out.println("Closing your journal...");
+                    return;
                 }
                 default -> System.out.println("Invalid option. Please try again.");
             }
         }
     }
 
-    public static void promptJournalEntry(){
+    private void promptJournalEntry(){
         System.out.println("-------------------");
         System.out.println("     NEW ENTRY     ");
         System.out.println("-------------------");
@@ -150,7 +164,7 @@ public class ConsoleUI {
         String text = promptText();
 
         try {
-            JournalService.createEntry(entryDate, rating, text);
+            journalService.createEntry(entryDate, rating, text);
             System.out.println("Entry saved successfully.");
         } catch (EntryAlreadyExistsException e) {
             System.out.println("You have already written today's entry.");
@@ -159,7 +173,7 @@ public class ConsoleUI {
         }
     }
 
-    static String promptRating() {
+    private String promptRating() {
         while (true) {
             System.out.println("How was your day? ");
             System.out.println("😭 SAD | 🙁 BAD | 😐 NEUTRAL | 🙂 GOOD | 😄 GREAT");
@@ -173,12 +187,12 @@ public class ConsoleUI {
         }
     }
 
-    static String promptText() {
+    private String promptText() {
         System.out.print("Spill your thoughts...");
         return sc.nextLine();
     }
 
-    public static void promptReadEntryByDate() {
+    private void promptReadEntryByDate() {
         System.out.println("-------------------");
         System.out.println("   YOUR ENTRIES    ");
         System.out.println("-------------------");
@@ -186,7 +200,7 @@ public class ConsoleUI {
         LocalDate date = promptDate();
 
         try{
-            JournalEntry entry = JournalService.readEntriesByDate(date);
+            JournalEntry entry = journalService.readEntriesByDate(date);
             System.out.println("----------------------------");
             System.out.println("Date: " + entry.getEntryDate());
             System.out.println("It was a " + entry.getRating() + " day.");
@@ -199,7 +213,7 @@ public class ConsoleUI {
         }
     }
 
-    public static LocalDate promptDate(){
+    private LocalDate promptDate(){
         while (true) {
             System.out.print("Date (yyyy-mm-dd): ");
             try {
@@ -210,7 +224,7 @@ public class ConsoleUI {
         }
     }
 
-    public static void promptDeleteEntry(){
+    private void promptDeleteEntry(){
         System.out.println("-------------------");
         System.out.println("    DELETE ENTRY   ");
         System.out.println("-------------------");
@@ -223,7 +237,7 @@ public class ConsoleUI {
         }
 
         try {
-            JournalService.deleteEntry(date);
+            journalService.deleteEntry(date);
             System.out.println("Entry deleted successfully.");
         } catch (EntryNotFoundException e) {
             System.out.println("No entry found for this date.");

@@ -1,7 +1,6 @@
 package org.carladumit.digitaljournal.service;
 
 import org.carladumit.digitaljournal.dao.UserDAO;
-import org.carladumit.digitaljournal.dao.impl.UserDAOJdbc;
 import org.carladumit.digitaljournal.exceptions.InvalidPasswordException;
 import org.carladumit.digitaljournal.exceptions.UserAlreadyExistsException;
 import org.carladumit.digitaljournal.exceptions.UserNotFoundException;
@@ -10,10 +9,14 @@ import org.carladumit.digitaljournal.util.PasswordHash;
 
 public class UserService {
 
-    private static final UserDAO userDAO = new UserDAOJdbc();
-    private static User currentUser;
+    private final UserDAO userDAO;
+    private User currentUser;
 
-    public static User login(String username, String password) throws UserNotFoundException, InvalidPasswordException {
+    public UserService(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    public User login(String username, String password) throws UserNotFoundException, InvalidPasswordException {
         User user = userDAO.findByUsername(username);
 
         if (user == null)
@@ -22,24 +25,24 @@ public class UserService {
         if (!PasswordHash.checkHash(password, user.getPassword())){
             throw new InvalidPasswordException();
         }
-        currentUser = user;
+        this.currentUser = user;
         return user;
     }
 
-    public static void register(String username, String password) throws UserAlreadyExistsException {
-        User user = userDAO.findByUsername(username);
+    public void register(String username, String password) throws UserAlreadyExistsException {
+        User newUser = userDAO.findByUsername(username);
 
-        if(userDAO.findByUsername(username)!=null)
+        if(newUser != null)
             throw new UserAlreadyExistsException();
 
         userDAO.registerUser(new User(username, password));
     }
 
-    public static User getCurrentUser() {
+    public User getCurrentUser() {
         return currentUser;
     }
 
-    public static void logout() {
-        currentUser = null;
+    public void logout() {
+        this.currentUser = null;
     }
 }

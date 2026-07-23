@@ -4,6 +4,7 @@ import org.carladumit.digitaljournal.ui.ConsoleUI;
 
 public class Main {
     public static void main(String[] args) {
-        ConsoleUI.start();
+        ConsoleUI ui = new ConsoleUI();
+        ui.start();
     }
 }
