@@ -137,6 +137,16 @@ public class MainJournalController {
         }
     }
 
+    private void loadOnThisDayEntries() {
+        try {
+            LocalDate today = LocalDate.now();
+            List<JournalEntry> entries = journalService.getUserEntriesAcrossYears(today);
+            yearlyTableView.setItems(FXCollections.observableArrayList(entries));
+        } catch (DatabaseException e) {
+            yearlyTableView.setItems(FXCollections.observableArrayList());
+        }
+    }
+
     private void updateEntriesCount(int count) {
         if (count == 0) {
             entriesCountLabel.setText("");
@@ -229,6 +239,8 @@ public class MainJournalController {
     private void showOnThisDayView() {
         viewJournal.setVisible(false);
         viewJournal.setManaged(false);
+        viewOnThisDay.setVisible(true);
+        viewOnThisDay.setManaged(true);
         loadOnThisDayEntries();
     }
 
@@ -240,11 +252,6 @@ public class MainJournalController {
         viewJournal.setManaged(true);
         loadUserEntries();
     }
-
-    private void loadOnThisDayEntries() {
-
-    }
-
 
     @FXML
     private void handleDeleteEntry() {
