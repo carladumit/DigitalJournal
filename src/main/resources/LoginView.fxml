@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.carladumit.digitaljournal.ui.LoginController"
+      alignment="CENTER"
+      spacing="18"
+      prefWidth="440"
+      prefHeight="560"
+      styleClass="login-root"
+      stylesheets="@style.css">
+
+    <padding>
+        <Insets top="45" right="45" bottom="45" left="45"/>
+    </padding>
+
+    <!-- Header -->
+    <VBox alignment="CENTER" spacing="6">
+        <Text text="Digital Journal" styleClass="title"/>
+        <Text text="Your five-year journey, one day at a time." styleClass="subtitle"/>
+    </VBox>
+
+    <!-- Login Card -->
+    <VBox spacing="16"
+          alignment="CENTER_LEFT"
+          maxWidth="330"
+          styleClass="login-card">
+
+        <Label fx:id="formTitleLabel"
+               text="Welcome back"
+               styleClass="form-title"/>
+
+        <!-- Username -->
+        <VBox spacing="6">
+            <Label text="Username" styleClass="field-label"/>
+
+            <TextField fx:id="usernameField"
+                       promptText="Enter your username"
+                       styleClass="text-field"/>
+        </VBox>
+
+        <!-- Password -->
+        <VBox spacing="6">
+            <Label text="Password" styleClass="field-label"/>
+
+            <PasswordField fx:id="passwordField"
+                           promptText="Enter your password"
+                           styleClass="password-field"/>
+        </VBox>
+
+        <!-- Confirm Password -->
+        <VBox spacing="6">
+            <Label fx:id="confirmPasswordLabel"
+                   text="Confirm password"
+                   styleClass="field-label"/>
+
+            <PasswordField fx:id="confirmPasswordField"
+                           promptText="Repeat your password"
+                           styleClass="password-field"/>
+        </VBox>
+
+        <!-- Status -->
+        <Label fx:id="statusLabel"
+               styleClass="error-message"
+               wrapText="true"
+               maxWidth="300"/>
+
+        <!-- Actions -->
+        <HBox spacing="15" alignment="CENTER">
+
+            <Button fx:id="primaryActionButton"
+                    text="Log In"
+                    onAction="#handlePrimaryAction"
+                    styleClass="button-primary"/>
+
+            <Button fx:id="secondaryActionButton"
+                    text="Sign Up"
+                    onAction="#handleSecondaryAction"
+                    styleClass="button-secondary"/>
+
+        </HBox>
+
+        <!-- Mode Toggle -->
+        <Label fx:id="toggleLabel"
+               text="Don't have an account? Sign up"
+               onMouseClicked="#toggleMode"
+               styleClass="toggle-label"
+               wrapText="true"/>
+
+    </VBox>
+
+</VBox>

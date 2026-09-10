@@ -1,0 +1,439 @@
+/* =========================================================
+   COTTON CANDY CLOUD PALETTE
+   ========================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-background: #eadbf1;
+    -fx-bg-dark: #cec4d6;
+    -fx-blue: #c5d6e4;
+    -fx-sky: #e2f0f6;
+    -fx-pink: #FAE7EB;
+    -fx-accent: #dca9b0;
+    -fx-red: #874C5D;
+    -fx-green: #658A79;
+    -fx-text-primary: #46404a;
+    -fx-text-secondary: #636063;
+}
+
+/* =========================================================
+   MAIN VIEW
+   ========================================================= */
+
+.main-root {
+    -fx-background-color: -fx-background;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.main-header {
+    -fx-background-color: -fx-background;
+}
+
+.main-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-fill: -fx-text-primary;
+}
+
+.today-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* =========================================================
+   SECTION TITLES
+   ========================================================= */
+
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-fill: -fx-text-primary;
+}
+
+.subtitle {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.entries-count-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.journal-card {
+    -fx-background-color: -fx-background;
+    -fx-background-radius: 16px;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+    -fx-padding: 8px;
+}
+
+/* =========================================================
+   TABLE VIEW
+   ========================================================= */
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -fx-bg-dark;
+    -fx-background-radius: 10px 10px 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell {
+    -fx-cell-size: 60px;
+    -fx-background-color: -fx-background;
+    -fx-border-color: transparent transparent -fx-bg-dark transparent;
+    -fx-padding: 5px 0;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: -fx-background;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: -fx-blue;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: -fx-text-primary;
+}
+
+.table-cell {
+    -fx-padding: 8px 10px;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 13px;
+    -fx-border-color: transparent;
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: fx-text-secondary;
+    -fx-font-size: 13px;
+}
+
+/* =========================================================
+   ENTRY DETAIL
+   ========================================================= */
+.entry-detail-card {
+    -fx-background-color: -fx-sky;
+    -fx-background-radius: 16px;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+    -fx-padding: 18px;
+}
+
+.detail-date {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.detail-mood {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.detail-text-area {
+    -fx-background-color: -fx-background;
+    -fx-background-radius: 10px;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-padding: 12px;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 13px;
+}
+
+.detail-text-area:focused {
+    -fx-border-color: -fx-bg-dark;
+}
+
+/* =========================================================
+   NEW ENTRY
+   ========================================================= */
+
+.new-entry-view {
+    -fx-background-color: transparent;
+}
+
+.entry-date-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* =========================================================
+   TEXT FIELDS
+   ========================================================= */
+
+.text-field,
+.password-field {
+    -fx-background-color:  white;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 9px;
+    -fx-background-radius: 9px;
+    -fx-padding: 10px 12px;
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-primary;
+    -fx-prompt-text-fill: -fx-text-secondary;
+}
+
+.text-field:focused,
+.password-field:focused {
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 2px;
+}
+
+/* =========================================================
+   TEXT AREA
+   ========================================================= */
+
+.text-area {
+    -fx-background-color: -fx-background;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-padding: 12px;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 13px;
+}
+
+.text-area:focused {
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 2px;
+}
+
+/* =========================================================
+   PRIMARY BUTTON
+   ========================================================= */
+
+.button-primary {
+    -fx-background-color: -fx-sky;
+    -fx-border-color: -fx-blue;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 18px;
+    -fx-cursor: hand;
+}
+
+.button-primary:hover {
+    -fx-background-color: -fx-blue;
+    -fx-text-fill: -fx-text-primary;
+}
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.button-secondary {
+    -fx-background-color: -fx-bg-dark;
+    -fx-text-fill: -fx-text-primary;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 13px;
+    -fx-padding: 9px 16px;
+    -fx-cursor: hand;
+}
+
+.button-secondary:hover {
+    -fx-background-color: -fx-background;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+}
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.button-delete {
+    -fx-background-color: -fx-accent;
+    -fx-text-fill: -fx-red;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 9px;
+    -fx-padding: 8px 14px;
+    -fx-cursor: hand;
+}
+
+.button-delete:hover {
+    -fx-background-color: -fx-accent;
+    -fx-text-fill: -fx-red;
+}
+
+/* =========================================================
+   EMOJI BUTTONS
+   ========================================================= */
+
+.emoji-btn {
+    -fx-font-size: 22px;
+    -fx-background-color: -fx-background;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 11px;
+    -fx-background-radius: 11px;
+    -fx-padding: 8px 12px;
+    -fx-cursor: hand;
+}
+
+.emoji-btn:hover {
+    -fx-background-color: -fx-bg-dark;
+    -fx-border-color:  -fx-background;
+}
+
+.emoji-btn-selected {
+    -fx-background-color: -fx-background;
+    -fx-border-color: -fx-bg-dark;
+    -fx-border-width: 2px;
+}
+
+/* =========================================================
+   STATUS MESSAGES
+   ========================================================= */
+
+.status-label {
+    -fx-font-size: 12px;
+}
+
+.status-success {
+    -fx-text-fill: -fx-green;
+}
+
+.status-error {
+    -fx-text-fill: -fx-red;
+}
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+.login-root {
+    -fx-background-color:  -fx-bg-dark
+}
+
+.login-card {
+    -fx-background-color: -fx-background;
+    -fx-background-radius: 18px;
+    -fx-border-color:  -fx-bg-dark;
+    -fx-border-width: 1px;
+    -fx-border-radius: 18px;
+    -fx-padding: 28px;
+}
+
+.title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-fill: -fx-text-primary;
+}
+
+.form-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill:  -fx-text-primary;
+}
+
+.field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill:  -fx-text-secondary;
+}
+
+.toggle-label {
+    -fx-text-fill: -fx-text-secondary;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.toggle-label:hover {
+    -fx-text-fill: -fx-text-primary;
+    -fx-underline: true;
+}
+
+.error-message {
+    -fx-text-fill: -fx-red;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* =========================================================
+   SEPARATOR
+   ========================================================= */
+
+.separator .line {
+    -fx-border-color: -fx-bg-dark;
+}
+
+/* =========================================================
+   SCROLLBARS
+   ========================================================= */
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -fx-sky;
+    -fx-background-radius: 6px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: -fx-blue;
+}
+
+/* =========================================================
+   ON THIS DAY
+   ========================================================= */
+
+.view-toggle-container {
+    -fx-background-color: -fx-sky;
+    -fx-padding: 6px;
+    -fx-background-radius: 14px;
+}
+
+.view-toggle-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-primary;
+    -fx-background-radius: 10px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.view-toggle-button:selected {
+    -fx-background-color: -fx-blue;
+}
+
