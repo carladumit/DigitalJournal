@@ -7,6 +7,7 @@ import org.carladumit.digitaljournal.model.JournalEntry;
 import org.carladumit.digitaljournal.model.User;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class JournalService {
 
@@ -30,12 +31,20 @@ public class JournalService {
 
     public JournalEntry readEntriesByDate(LocalDate entryDate) throws EntryNotFoundException{
         User currentUser = userService.getCurrentUser();
-
         JournalEntry entry = journalDAO.findEntryByUserAndDate(currentUser.getId(), entryDate);
         if(entry == null)
             throw new EntryNotFoundException();
-
         return entry;
+    }
+
+    public List<JournalEntry> getUserEntries() {
+        User currentUser = userService.getCurrentUser();
+        return journalDAO.findAllEntriesByUser(currentUser.getId());
+    }
+
+    public List<JournalEntry> getUserEntriesAcrossYears(LocalDate date) {
+        User currentUser = userService.getCurrentUser();
+        return journalDAO.findEntriesByUserAndMonthAndDay(currentUser.getId(), date.getMonthValue(), date.getDayOfMonth());
     }
 
     public void deleteEntry(LocalDate date) throws EntryNotFoundException {

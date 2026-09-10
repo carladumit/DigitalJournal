@@ -7,6 +7,8 @@ import org.carladumit.digitaljournal.util.DBConnection;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JournalEntryDAOJdbc implements JournalEntryDAO {
 
@@ -18,7 +20,7 @@ public class JournalEntryDAOJdbc implements JournalEntryDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
                 ps.setInt(1, entry.getUserID());
-                ps.setDate(2, Date.valueOf(entry.getEntryDate()));
+                ps.setString(2, entry.getEntryDate().toString());
                 ps.setString(3, entry.getRating());
                 ps.setString(4, entry.getText());
 
@@ -50,9 +52,10 @@ public class JournalEntryDAOJdbc implements JournalEntryDAO {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
-                        return new JournalEntry(
+
+                        JournalEntry entry = new JournalEntry(
                                 rs.getInt("user_id"),
-                                rs.getDate("entry_date").toLocalDate(),
+                                LocalDate.parse( rs.getString("entry_date")),
                                 rs.getString("rating"),
                                 rs.getString("text")
                         );
@@ -61,6 +64,84 @@ public class JournalEntryDAOJdbc implements JournalEntryDAO {
                 }
             }catch (SQLException e) {
             throw new DatabaseException("Unable to find journal entry.", e);
+        }
+    }
+
+    @Override
+    public List<JournalEntry> findAllEntriesByUser(int userID) {
+        String sql = """
+                SELECT id,
+                       user_id,
+                       entry_date,
+                       rating,
+                       text
+                FROM journal_entry
+                WHERE user_id = ?
+                ORDER BY entry_date DESC
+                """;
+
+        List<JournalEntry> entries = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, userID);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+
+                    JournalEntry entry = new JournalEntry(
+                            rs.getInt("user_id"),
+                            LocalDate.parse( rs.getString("entry_date")),
+                            rs.getString("rating"),
+                            rs.getString("text")
+                    );
+                    entries.add(entry);
+                }
+            }
+            return entries;
+        } catch (SQLException e) {
+            throw new DatabaseException("Unable to load journal entries.", e);
+        }
+    }
+
+    @Override
+    public List<JournalEntry> findEntriesByUserAndMonthAndDay(int userID, int month, int day) {
+        String sql = """
+            SELECT user_id,
+                   entry_date,
+                   rating,
+                   text
+            FROM journal_entry
+            WHERE user_id = ?
+              AND CAST(strftime('%m', entry_date) AS INTEGER) = ?
+              AND CAST(strftime('%d', entry_date) AS INTEGER) = ?
+            ORDER BY entry_date ASC
+            """;
+
+        List<JournalEntry> entries = new ArrayList<>();
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, userID);
+            ps.setInt(2, month);
+            ps.setInt(3, day);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String dateValue = rs.getString("entry_date");
+
+                    JournalEntry entry = new JournalEntry(
+                                    rs.getInt("user_id"),
+                                    LocalDate.parse(dateValue),
+                                    rs.getString("rating"),
+                                    rs.getString("text")
+                            );
+                    entries.add(entry);
+                }
+            }
+            return entries;
+        } catch (SQLException e) {
+            throw new DatabaseException("Unable to load entries from this day across the years.", e);
         }
     }
 
