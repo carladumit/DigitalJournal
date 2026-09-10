@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 public class MainJournalController {
 
@@ -65,8 +66,8 @@ public class MainJournalController {
     private String selectedRating = null;
     private Button selectedEmojiButton = null;
 
-    private static final DateTimeFormatter HEADER_DATE_FORMAT = DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy");
-    private static final DateTimeFormatter ENTRY_DATE_FORMAT = DateTimeFormatter.ofPattern("d MMMM, yyyy");
+    private static final DateTimeFormatter HEADER_DATE_FORMAT = DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy", Locale.ENGLISH);
+    private static final DateTimeFormatter ENTRY_DATE_FORMAT = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
     private final ToggleGroup viewToggleGroup = new ToggleGroup();
 
     @FXML
@@ -74,7 +75,7 @@ public class MainJournalController {
         LocalDate today = LocalDate.now();
         todayLabel.setText(today.format(HEADER_DATE_FORMAT));
         onThisDayTitle.setText("On This Day");
-        onThisDaySubtitle.setText("Your memories from " + today.format(DateTimeFormatter.ofPattern("d MMMM")) + " across the years");
+        onThisDaySubtitle.setText("Your memories from " + today.format(DateTimeFormatter.ofPattern("d MMMM", Locale.ENGLISH)) + " across the years");
 
         setupTable();
         setupTableSelection();
@@ -102,9 +103,9 @@ public class MainJournalController {
 
         entriesTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        dateColumn.prefWidthProperty().bind(entriesTableView.widthProperty().multiply(0.3));
-        moodColumn.prefWidthProperty().bind(entriesTableView.widthProperty().multiply(0.15));
-        previewColumn.prefWidthProperty().bind(entriesTableView.widthProperty().multiply(0.55));    }
+        dateColumn.prefWidthProperty().bind(entriesTableView.widthProperty().multiply(0.23));
+        moodColumn.prefWidthProperty().bind(entriesTableView.widthProperty().multiply(0.17));
+        previewColumn.prefWidthProperty().bind(entriesTableView.widthProperty().multiply(0.6));    }
 
     private void setupTableSelection() {
         entriesTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldEntry, newEntry) -> {
@@ -129,8 +130,8 @@ public class MainJournalController {
         yearEntryColumn.setSortable(false);
 
         yearlyTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        yearColumn.prefWidthProperty().bind(yearlyTableView.widthProperty().multiply(0.25));
-        yearMoodColumn.prefWidthProperty().bind(yearlyTableView.widthProperty().multiply(0.15));
+        yearColumn.prefWidthProperty().bind(yearlyTableView.widthProperty().multiply(0.23));
+        yearMoodColumn.prefWidthProperty().bind(yearlyTableView.widthProperty().multiply(0.17));
         yearEntryColumn.prefWidthProperty().bind(yearlyTableView.widthProperty().multiply(0.6));
     }
 
