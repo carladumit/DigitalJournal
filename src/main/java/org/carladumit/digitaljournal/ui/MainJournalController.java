@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -24,9 +23,7 @@ import org.carladumit.digitaljournal.service.UserService;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainJournalController {
 
@@ -99,8 +96,8 @@ public class MainJournalController {
         moodColumn.setCellValueFactory(cellData -> new SimpleStringProperty(formatMood(cellData.getValue().getRating())));
         previewColumn.setCellValueFactory(cellData -> new SimpleStringProperty(createPreview(cellData.getValue().getText())));
 
-        dateColumn.setSortable(false);
-        moodColumn.setSortable(false);
+        dateColumn.setSortable(true);
+        moodColumn.setSortable(true);
         previewColumn.setSortable(false);
         entriesTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
@@ -124,7 +121,7 @@ public class MainJournalController {
                 new SimpleStringProperty(createPreview(cellData.getValue().getText())));
 
         yearColumn.setSortable(true);
-        yearMoodColumn.setSortable(true);
+        yearMoodColumn.setSortable(false);
         yearEntryColumn.setSortable(false);
         yearlyTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
